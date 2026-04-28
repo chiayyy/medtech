@@ -76,22 +76,60 @@ document.addEventListener('DOMContentLoaded', () => {
         }, { passive: true });
     }
 
-    // ============== ID card pointer-tracked 3D tilt ==============
+    // ============== ID card auto-rotate + drag-to-spin ==============
     const idCard = document.getElementById('idCard');
-    if (idCard) {
-        idCard.addEventListener('pointermove', (e) => {
-            const r = idCard.getBoundingClientRect();
-            const x = (e.clientX - r.left) / r.width - 0.5;
-            const y = (e.clientY - r.top) / r.height - 0.5;
-            const rx = (-y * 14).toFixed(2);
-            const ry = (x * 18).toFixed(2);
-            idCard.style.animation = 'none';
-            idCard.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(8px)`;
-        });
-        idCard.addEventListener('pointerleave', () => {
-            idCard.style.transform = '';
-            idCard.style.animation = '';
-        });
+    const idCardInner = document.getElementById('idCardInner');
+    if (idCard && idCardInner) {
+        let angle = 0;                  // current Y rotation (deg)
+        let velocity = 22;              // current angular velocity (deg/sec)
+        const BASE_VELOCITY = 22;       // gentle auto-rotate speed
+        const DECAY_PER_SEC = 1.6;      // how fast extra spin decays back to base
+        const DRAG_SENSITIVITY = 1.4;   // 1px drag = +1.4 deg/sec velocity
+        let lastTime = performance.now();
+        let dragging = false;
+        let lastPointerX = 0;
+        let pointerId = null;
+
+        const onPointerDown = (e) => {
+            dragging = true;
+            lastPointerX = e.clientX;
+            pointerId = e.pointerId;
+            try { idCard.setPointerCapture(e.pointerId); } catch (_) {}
+            e.preventDefault();
+        };
+        const onPointerMove = (e) => {
+            if (!dragging) return;
+            const dx = e.clientX - lastPointerX;
+            lastPointerX = e.clientX;
+            // Add momentum based on drag direction & magnitude
+            velocity += dx * DRAG_SENSITIVITY;
+        };
+        const onPointerUp = (e) => {
+            if (!dragging) return;
+            dragging = false;
+            try { idCard.releasePointerCapture(pointerId); } catch (_) {}
+        };
+
+        idCard.addEventListener('pointerdown', onPointerDown);
+        window.addEventListener('pointermove', onPointerMove);
+        window.addEventListener('pointerup', onPointerUp);
+        window.addEventListener('pointercancel', onPointerUp);
+
+        const tick = (now) => {
+            const dt = Math.min((now - lastTime) / 1000, 0.05);
+            lastTime = now;
+
+            // Decay extra spin back toward base velocity (preserving sign of base)
+            const target = velocity >= 0 ? BASE_VELOCITY : -BASE_VELOCITY;
+            // Lerp velocity toward base, but only the "extra" portion above base magnitude
+            const delta = velocity - target;
+            velocity = target + delta * Math.exp(-DECAY_PER_SEC * dt);
+
+            angle += velocity * dt;
+            idCardInner.style.transform = `rotateY(${angle.toFixed(2)}deg)`;
+            requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
     }
 
     // Breakdown video — silent autoplay loop, audio fade-in on user interaction
