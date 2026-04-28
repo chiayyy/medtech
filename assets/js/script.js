@@ -76,23 +76,42 @@ document.addEventListener('DOMContentLoaded', () => {
         }, { passive: true });
     }
 
-    // ============== ID card auto-rotate + drag-to-spin ==============
+    // ============== ID card random tumbling + drag + click particles ==============
     const idCard = document.getElementById('idCard');
     const idCardInner = document.getElementById('idCardInner');
     if (idCard && idCardInner) {
-        let angle = 0;                  // current Y rotation (deg)
-        let velocity = 22;              // current angular velocity (deg/sec)
-        const BASE_VELOCITY = 22;       // gentle auto-rotate speed
-        const DECAY_PER_SEC = 1.6;      // how fast extra spin decays back to base
-        const DRAG_SENSITIVITY = 1.4;   // 1px drag = +1.4 deg/sec velocity
+        // Multi-axis rotation state
+        let angleX = 0, angleY = 0, angleZ = 0;
+        let velX = 6, velY = 22, velZ = 0;
+        const BASE_X = 6;
+        const BASE_Y = 22;
+        const BASE_Z = 0;
+        const DECAY = 1.3;
+        const DRAG_SENS = 1.4;
+
         let lastTime = performance.now();
         let dragging = false;
-        let lastPointerX = 0;
+        let lastPointerX = 0, lastPointerY = 0;
+        let totalMove = 0;
         let pointerId = null;
+
+        // Random impulses periodically to make rotation feel alive / non-repetitive
+        const scheduleImpulse = () => {
+            const t = 2000 + Math.random() * 3500;
+            setTimeout(() => {
+                velX += (Math.random() - 0.5) * 60;
+                velZ += (Math.random() - 0.5) * 30;
+                if (Math.random() < 0.35) velY += (Math.random() - 0.5) * 90;
+                scheduleImpulse();
+            }, t);
+        };
+        scheduleImpulse();
 
         const onPointerDown = (e) => {
             dragging = true;
             lastPointerX = e.clientX;
+            lastPointerY = e.clientY;
+            totalMove = 0;
             pointerId = e.pointerId;
             try { idCard.setPointerCapture(e.pointerId); } catch (_) {}
             e.preventDefault();
@@ -100,14 +119,25 @@ document.addEventListener('DOMContentLoaded', () => {
         const onPointerMove = (e) => {
             if (!dragging) return;
             const dx = e.clientX - lastPointerX;
+            const dy = e.clientY - lastPointerY;
             lastPointerX = e.clientX;
-            // Add momentum based on drag direction & magnitude
-            velocity += dx * DRAG_SENSITIVITY;
+            lastPointerY = e.clientY;
+            totalMove += Math.abs(dx) + Math.abs(dy);
+            velY += dx * DRAG_SENS;
+            velX -= dy * DRAG_SENS * 0.7;
         };
         const onPointerUp = (e) => {
             if (!dragging) return;
             dragging = false;
             try { idCard.releasePointerCapture(pointerId); } catch (_) {}
+            // Treat near-stationary release as a click → particle burst
+            if (totalMove < 8) {
+                spawnParticles(e.clientX, e.clientY);
+                // Add a fun spin kick so the click "reacts"
+                velY += (Math.random() < 0.5 ? -1 : 1) * (140 + Math.random() * 120);
+                velX += (Math.random() - 0.5) * 80;
+                velZ += (Math.random() - 0.5) * 40;
+            }
         };
 
         idCard.addEventListener('pointerdown', onPointerDown);
@@ -115,21 +145,108 @@ document.addEventListener('DOMContentLoaded', () => {
         window.addEventListener('pointerup', onPointerUp);
         window.addEventListener('pointercancel', onPointerUp);
 
+        const decayTo = (v, base, dt) => base + (v - base) * Math.exp(-DECAY * dt);
+
         const tick = (now) => {
             const dt = Math.min((now - lastTime) / 1000, 0.05);
             lastTime = now;
 
-            // Decay extra spin back toward base velocity (preserving sign of base)
-            const target = velocity >= 0 ? BASE_VELOCITY : -BASE_VELOCITY;
-            // Lerp velocity toward base, but only the "extra" portion above base magnitude
-            const delta = velocity - target;
-            velocity = target + delta * Math.exp(-DECAY_PER_SEC * dt);
+            velX = decayTo(velX, BASE_X, dt);
+            velY = decayTo(velY, BASE_Y, dt);
+            velZ = decayTo(velZ, BASE_Z, dt);
 
-            angle += velocity * dt;
-            idCardInner.style.transform = `rotateY(${angle.toFixed(2)}deg)`;
+            angleX += velX * dt;
+            angleY += velY * dt;
+            angleZ += velZ * dt;
+
+            idCardInner.style.transform =
+                `rotateX(${angleX.toFixed(2)}deg) ` +
+                `rotateY(${angleY.toFixed(2)}deg) ` +
+                `rotateZ(${angleZ.toFixed(2)}deg)`;
             requestAnimationFrame(tick);
         };
         requestAnimationFrame(tick);
+    }
+
+    // ============== Particle burst ==============
+    function spawnParticles(x, y) {
+        const COLORS  = ['#00e0c6', '#2f6bff', '#7a5cff', '#ff3d57', '#ffffff'];
+        const COUNT   = 32;
+        const RING_COUNT = 1;
+
+        // A quick ring shockwave
+        for (let r = 0; r < RING_COUNT; r++) {
+            const ring = document.createElement('div');
+            ring.className = 'particle-ring';
+            ring.style.cssText = `
+                position: fixed; left: ${x}px; top: ${y}px;
+                width: 8px; height: 8px;
+                border-radius: 50%;
+                border: 2px solid rgba(0, 224, 198, 0.85);
+                box-shadow: 0 0 30px rgba(0, 224, 198, 0.55);
+                pointer-events: none;
+                transform: translate(-50%, -50%);
+                z-index: 9999;
+                will-change: transform, opacity;
+                opacity: 0.9;
+            `;
+            document.body.appendChild(ring);
+            const startT = performance.now();
+            const animateRing = (now) => {
+                const t = (now - startT) / 600;
+                if (t >= 1) { ring.remove(); return; }
+                const scale = 1 + t * 18;
+                ring.style.transform = `translate(-50%, -50%) scale(${scale})`;
+                ring.style.opacity = (1 - t).toFixed(3);
+                requestAnimationFrame(animateRing);
+            };
+            requestAnimationFrame(animateRing);
+        }
+
+        // Sparks
+        for (let i = 0; i < COUNT; i++) {
+            const p = document.createElement('div');
+            p.className = 'particle';
+            const angle = Math.random() * Math.PI * 2;
+            const speed = 200 + Math.random() * 420;
+            const size  = 4 + Math.random() * 7;
+            const color = COLORS[Math.floor(Math.random() * COLORS.length)];
+            p.style.cssText = `
+                position: fixed;
+                left: ${x}px; top: ${y}px;
+                width: ${size}px; height: ${size}px;
+                background: ${color};
+                border-radius: 50%;
+                pointer-events: none;
+                box-shadow: 0 0 ${size * 2.4}px ${color};
+                z-index: 9999;
+                transform: translate(-50%, -50%);
+                will-change: transform, opacity;
+            `;
+            document.body.appendChild(p);
+
+            let vx = Math.cos(angle) * speed;
+            let vy = Math.sin(angle) * speed;
+            let posX = x, posY = y;
+            let life = 1;
+            let lastT = performance.now();
+            const animate = (now) => {
+                const dt = (now - lastT) / 1000;
+                lastT = now;
+                posX += vx * dt;
+                posY += vy * dt;
+                vy += 720 * dt;     // gravity
+                vx *= 0.985;
+                life -= dt * 1.05;
+                if (life <= 0) { p.remove(); return; }
+                p.style.left = posX + 'px';
+                p.style.top  = posY + 'px';
+                p.style.opacity = life.toFixed(3);
+                p.style.transform = `translate(-50%, -50%) scale(${(0.35 + life * 0.65).toFixed(3)})`;
+                requestAnimationFrame(animate);
+            };
+            requestAnimationFrame(animate);
+        }
     }
 
     // Breakdown video — silent autoplay loop, audio fade-in on user interaction
