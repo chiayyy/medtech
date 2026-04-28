@@ -1207,3 +1207,179 @@ body {
     }
     html { scroll-behavior: auto; }
 }
+
+/* ============================================================
+   RESPONSIVE — Tablet & Mobile only (desktop unchanged)
+   ============================================================ */
+
+/* ---------- TABLET (≤ 1024px) ---------- */
+@media (max-width: 1024px) {
+
+    /* Mandatory snap is hostile on touch devices — switch to proximity */
+    html, body { scroll-snap-type: y proximity; }
+
+    .hero, .section { min-height: auto; }
+    .hero { padding: 120px 0 60px; }
+    .section { padding: 80px 0 70px; }
+    .section--connect, .section--breakdown, .section--intro { padding: 70px 0; }
+
+    .nav__inner { gap: 18px; padding: 14px 20px; }
+    .nav__cta { padding: 9px 14px; font-size: 13px; }
+
+    .hero__inner { gap: 50px; }
+    .hero__title { font-size: clamp(36px, 6vw, 60px); }
+    .hero__sub { font-size: 16px; }
+
+    .hero__visual { min-height: 480px; }
+    .patch { width: 70%; }
+
+    /* Steps gap a bit tighter */
+    .steps { gap: 16px; }
+    .step { padding: 30px 24px; }
+
+    /* Connect padding on tablet */
+    .connect { padding: 60px 50px; gap: 50px; }
+}
+
+/* ---------- MOBILE (≤ 720px) ---------- */
+@media (max-width: 720px) {
+
+    .container { padding: 0 18px; }
+
+    /* Nav: trim to brand + CTA */
+    .nav__inner { padding: 12px 16px; gap: 12px; }
+    .nav__brand { font-size: 17px; }
+    .brand-mark { width: 30px; height: 30px; border-radius: 8px; }
+    .brand-mark svg { width: 17px; height: 17px; }
+    .nav__cta { padding: 8px 14px; font-size: 12.5px; }
+
+    /* Hero */
+    .hero { padding: 110px 0 50px; }
+    .hero__inner { grid-template-columns: 1fr; gap: 40px; }
+    .hero__content { text-align: center; }
+    .eyebrow { margin-bottom: 18px; font-size: 11.5px; padding: 6px 14px; }
+    .hero__title { font-size: clamp(32px, 9vw, 44px); margin-bottom: 18px; }
+    .hero__sub { font-size: 15px; margin-bottom: 28px; max-width: none; }
+    .hero__cta { justify-content: center; gap: 10px; margin-bottom: 36px; }
+    .btn { padding: 13px 22px; font-size: 14px; }
+
+    .hero__stats {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+        padding-top: 22px;
+        text-align: center;
+    }
+    .stat__num { font-size: 24px; }
+    .stat__label { font-size: 10.5px; letter-spacing: 0.04em; }
+
+    /* Hero visual + ID card */
+    .hero__visual {
+        max-width: 320px;
+        min-height: 380px;
+        margin: 0 auto;
+    }
+    .patch { width: 100%; aspect-ratio: 0.85; }
+    .id-card { width: 62%; }
+
+    /* Reposition floating vitals tighter to the card so they don't clip */
+    .vital {
+        min-width: 86px;
+        padding: 7px 10px;
+        gap: 8px;
+        border-radius: 11px;
+    }
+    .vital__icon { width: 24px; height: 24px; border-radius: 7px; }
+    .vital__icon svg { width: 13px; height: 13px; }
+    .vital__label { font-size: 8.5px; margin-bottom: 2px; }
+    .vital__value { font-size: 13.5px; }
+    .vital__value em { font-size: 9.5px; }
+    .vital--spo2 { top: 4%;  left: 0%; }
+    .vital--temp { top: 16%; right: 0%; }
+    .vital--bp   { bottom: 18%; left: 0%; }
+    .vital--gps  { bottom: 4%;  right: 0%; }
+    .patch__ring { display: none; }
+
+    /* Sections */
+    .section { padding: 70px 0 60px; }
+    .section__head { margin-bottom: 40px; }
+    .section__title { font-size: clamp(28px, 7.6vw, 40px); }
+    .section__sub { font-size: 15px; }
+    .kicker { font-size: 11.5px; margin-bottom: 14px; }
+
+    /* Intro */
+    .section--intro { padding: 60px 0; }
+    .intro__lead { font-size: 17px; }
+    .intro__body { font-size: 15px; }
+
+    /* Sensors: 1 col, including the wide one */
+    .sensors { grid-template-columns: 1fr; gap: 14px; }
+    .sensor, .sensor--wide { grid-column: span 1; padding: 26px 22px; }
+    .sensor h3 { font-size: 18px; }
+    .sensor p { font-size: 14px; }
+    .sensor__icon { width: 48px; height: 48px; margin-bottom: 16px; }
+    .sensor__icon svg { width: 22px; height: 22px; }
+
+    /* Steps: 1 col stacked, drop the connector line */
+    .steps { grid-template-columns: 1fr; gap: 14px; }
+    .steps::before { display: none; }
+    .step { padding: 26px 22px; }
+    .step h3 { font-size: 19px; }
+    .step p { font-size: 14px; }
+
+    /* Breakdown video */
+    .section--breakdown { padding: 50px 0 60px; }
+    .video-frame { border-radius: 18px; }
+
+    /* Connect */
+    .section--connect { padding: 60px 0; }
+    .connect {
+        padding: 44px 24px;
+        grid-template-columns: 1fr;
+        gap: 36px;
+        text-align: center;
+        border-radius: 22px;
+    }
+    .connect__title { font-size: clamp(24px, 6.6vw, 34px); }
+    .connect__sub { font-size: 15px; margin: 0 auto 24px; }
+    .connect__handle { padding: 12px 18px; font-size: 14.5px; }
+    .qr-card__placeholder { width: 180px; height: 180px; }
+    .qr-card { padding: 14px; }
+
+    /* Footer */
+    .footer { padding: 30px 0 24px; }
+
+    /* Hide scroll hint on small screens */
+    .hero__scroll { display: none; }
+}
+
+/* ---------- SMALL MOBILE (≤ 400px) ---------- */
+@media (max-width: 400px) {
+    .nav__brand { font-size: 16px; }
+    .nav__cta { font-size: 11.5px; padding: 7px 12px; }
+
+    .hero__stats { gap: 8px; }
+    .stat__num { font-size: 20px; }
+    .stat__label { font-size: 9.5px; }
+
+    .hero__visual { min-height: 340px; }
+    .id-card { width: 58%; }
+
+    /* Pull vitals fully outside the card without clipping */
+    .vital { min-width: 78px; padding: 6px 8px; }
+    .vital__value { font-size: 12.5px; }
+
+    .section__title { font-size: clamp(24px, 8vw, 32px); }
+
+    .qr-card__placeholder { width: 160px; height: 160px; }
+}
+
+/* ---------- LANDSCAPE PHONES — keep hero compact ---------- */
+@media (max-height: 560px) and (orientation: landscape) {
+    .hero { padding: 100px 0 40px; min-height: auto; }
+    .hero__inner { grid-template-columns: 1.2fr 1fr; gap: 32px; }
+    .hero__content { text-align: left; }
+    .hero__cta { justify-content: flex-start; }
+    .hero__visual { min-height: 320px; max-width: 280px; }
+    .hero__stats { padding-top: 16px; gap: 14px; }
+    .hero__scroll { display: none; }
+}
