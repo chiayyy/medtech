@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="MEDTECH Integrated Triage Patch - A peel-and-stick digital emergency device that turns any travel medical kit into a real-time vital-signs monitor for the Golden Hour." />
+    <title>MEDTECH | Integrated Triage Patch</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+
+<!-- ============ NAVIGATION ============ -->
+<header class="nav">
+    <div class="nav__inner">
+        <a href="#top" class="nav__brand">
+            <span class="brand-mark">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 12h4l2-7 4 14 2-7h6"/>
+                </svg>
+            </span>
+            <span class="brand-text">MED<span>TECH</span></span>
+        </a>
+        <nav class="nav__links">
+            <a href="#about">Product</a>
+            <a href="#sensors">Technology</a>
+            <a href="#breakdown">Breakdown</a>
+            <a href="#process">How It Works</a>
+            <a href="#connect">Connect</a>
+        </nav>
+        <a href="https://www.instagram.com/medtech_patch?igsh=MWo3cTcwbndmZzlyYg==" target="_blank" rel="noopener noreferrer" class="nav__cta">Follow Journey</a>
+    </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section id="top" class="hero">
+    <div class="hero__bg">
+        <div class="hero__pulse"></div>
+        <div class="hero__grid"></div>
+    </div>
+
+    <div class="hero__inner">
+        <div class="hero__content">
+            <span class="eyebrow">
+                <span class="eyebrow__dot"></span>
+                Integrated Triage Patch
+            </span>
+            <h1 class="hero__title">
+                Every second of the<br/>
+                <span class="grad">Golden Hour</span><br/>
+                works to save a life.
+            </h1>
+            <p class="hero__sub">
+                MEDTECH transforms the traditional first-aid kit from a passive supply box into a proactive, life-saving monitoring system. Peel, stick, and transmit critical vitals to responders before the ambulance even arrives.
+            </p>
+            <div class="hero__cta">
+                <a href="#breakdown" class="btn btn--primary">
+                    See Product Breakdown
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+                </a>
+                <a href="#process" class="btn btn--ghost">How It Works</a>
+            </div>
+
+            <div class="hero__stats">
+                <div class="stat">
+                    <span class="stat__num">5</span>
+                    <span class="stat__label">Medical-Grade Sensors</span>
+                </div>
+                <div class="stat">
+                    <span class="stat__num">0</span>
+                    <span class="stat__label">Training Required</span>
+                </div>
+                <div class="stat">
+                    <span class="stat__num">60<em>min</em></span>
+                    <span class="stat__label">Golden Hour Coverage</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="hero__visual">
+            <div class="patch">
+                <!-- MEDTECH lanyard + ID card -->
+                <div class="lanyard">
+                    <div class="lanyard__pivot"></div>
+                    <div class="lanyard__swing">
+                        <div class="lanyard__strap"></div>
+                        <div class="lanyard__clip"></div>
+                        <div class="id-card" id="idCard">
+                            <img src="lanyard.png" alt="MEDTECH ID Card" draggable="false" />
+                            <div class="id-card__shine"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="patch__ring patch__ring--1"></div>
+                <div class="patch__ring patch__ring--2"></div>
+                <div class="patch__ring patch__ring--3"></div>
+
+                <!-- Floating vitals -->
+                <div class="vital vital--spo2">
+                    <div class="vital__icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M6.5 13.5C6.5 9 9 4 12 4s5.5 5 5.5 9.5a5.5 5.5 0 0 1-11 0z"/>
+                        </svg>
+                    </div>
+                    <div class="vital__data">
+                        <span class="vital__label">SpO₂</span>
+                        <strong class="vital__value">98<em>%</em></strong>
+                    </div>
+                </div>
+
+                <div class="vital vital--temp">
+                    <div class="vital__icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/>
+                        </svg>
+                    </div>
+                    <div class="vital__data">
+                        <span class="vital__label">Temp</span>
+                        <strong class="vital__value">36.7<em>°C</em></strong>
+                    </div>
+                </div>
+
+                <div class="vital vital--bp">
+                    <div class="vital__icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2.69s-7 7.16-7 12a7 7 0 0 0 14 0c0-4.84-7-12-7-12z"/>
+                        </svg>
+                    </div>
+                    <div class="vital__data">
+                        <span class="vital__label">BP</span>
+                        <strong class="vital__value">118<em>/76</em></strong>
+                    </div>
+                </div>
+
+                <div class="vital vital--gps">
+                    <div class="vital__icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/>
+                            <circle cx="12" cy="10" r="3"/>
+                        </svg>
+                    </div>
+                    <div class="vital__data">
+                        <span class="vital__label">GPS Lock</span>
+                        <strong class="vital__value">3.139°N</strong>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <a href="#about" class="hero__scroll" aria-label="Scroll to next section">
+        <span></span>
+    </a>
+</section>
+
+<!-- ============ ABOUT / INTRO ============ -->
+<section id="about" class="section section--intro">
+    <div class="container">
+        <div class="section__head">
+            <span class="kicker">Product Introduction</span>
+            <h2 class="section__title">A first-aid kit that <span class="grad">thinks</span> for you.</h2>
+        </div>
+        <div class="intro__grid">
+            <p class="intro__lead">
+                MEDTECH is a digital emergency tool engineered specifically for travel medical kits. In a critical accident — a car crash, a remote-trail injury, or a workplace incident — any bystander can retrieve the patch and <strong>"peel and stick"</strong> it onto the victim's skin.
+            </p>
+            <p class="intro__body">
+                The patch instantly digitizes vital signs and streams them in real time to emergency responders. By providing the medical insight an ambulance team would normally only see on arrival, MEDTECH ensures that every second of the Golden Hour is spent treating — not diagnosing.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- ============ SENSORS / FEATURES ============ -->
+<section id="sensors" class="section section--sensors">
+    <div class="container">
+        <div class="section__head">
+            <span class="kicker">Key Functions & Sensors</span>
+            <h2 class="section__title">Five medical-grade sensors.<br/>One <span class="grad">flexible PCB</span>.</h2>
+            <p class="section__sub">Powered by Flexible Electronics technology, the patch integrates a complete clinical-grade sensor stack into a single conformable surface — thin enough to wear, robust enough to trust.</p>
+        </div>
+
+        <div class="sensors">
+            <article class="sensor">
+                <div class="sensor__icon sensor__icon--red">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                    </svg>
+                </div>
+                <h3>Real-time ECG & Heart Rate</h3>
+                <p>Captures electrical heart signals and pulse frequency to identify cardiac arrest the moment it begins.</p>
+            </article>
+
+            <article class="sensor">
+                <div class="sensor__icon sensor__icon--rose">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2.69s-7 7.16-7 12a7 7 0 0 0 14 0c0-4.84-7-12-7-12z"/>
+                    </svg>
+                </div>
+                <h3>Blood Pressure Estimation</h3>
+                <p>Advanced optical PPG sensors track blood pressure trends, providing early warning for internal bleeding or shock.</p>
+            </article>
+
+            <article class="sensor">
+                <div class="sensor__icon sensor__icon--cyan">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M6.5 13.5C6.5 9 9 4 12 4s5.5 5 5.5 9.5a5.5 5.5 0 0 1-11 0z"/>
+                        <path d="M12 4v16"/>
+                    </svg>
+                </div>
+                <h3>Respiratory Rate & SpO₂</h3>
+                <p>Measures breaths per minute and blood oxygen saturation to identify airway obstructions or lung trauma.</p>
+            </article>
+
+            <article class="sensor">
+                <div class="sensor__icon sensor__icon--orange">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/>
+                    </svg>
+                </div>
+                <h3>Body Temperature</h3>
+                <p>Continuously tracks core body temperature to detect hypothermia, heat stroke, or infection-induced fever.</p>
+            </article>
+
+            <article class="sensor sensor--wide">
+                <div class="sensor__icon sensor__icon--green">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/>
+                        <circle cx="12" cy="10" r="3"/>
+                    </svg>
+                </div>
+                <h3>GPS / GNSS Positioning</h3>
+                <p>A built-in low-power satellite module transmits precise coordinates to rescue teams — even in remote areas where cellular signal fails.</p>
+            </article>
+        </div>
+    </div>
+</section>
+
+<!-- ============ PRODUCT BREAKDOWN (VIDEO) ============ -->
+<section id="breakdown" class="section section--breakdown">
+    <div class="container">
+        <div class="video-frame">
+            <video
+                class="video-frame__player"
+                id="breakdownVideo"
+                src="latest.mp4"
+                autoplay
+                loop
+                muted
+                playsinline
+                preload="auto"
+                controls
+            ></video>
+        </div>
+    </div>
+</section>
+
+<!-- ============ PROCESS / HOW IT WORKS ============ -->
+<section id="process" class="section section--process">
+    <div class="container">
+        <div class="section__head">
+            <span class="kicker">Step-by-Step Usage</span>
+            <h2 class="section__title">Engineered for <span class="grad">zero-friction</span> use.</h2>
+            <p class="section__sub">No medical training. No app setup. No hesitation. Four steps from patch to paramedic.</p>
+        </div>
+
+        <ol class="steps">
+            <li class="step">
+                <span class="step__num">01</span>
+                <h3>Peel Off</h3>
+                <p>Retrieve the patch from your travel med-kit. Peeling the protective film automatically activates the built-in flexible battery — no buttons, no pairing.</p>
+            </li>
+            <li class="step">
+                <span class="step__num">02</span>
+                <h3>Apply</h3>
+                <p>Stick the patch firmly onto clean skin — ideally the chest or upper arm. The medical-grade adhesive holds secure even in rain, sweat, or rough terrain.</p>
+            </li>
+            <li class="step">
+                <span class="step__num">03</span>
+                <h3>Monitor</h3>
+                <p>Sensors immediately begin streaming. Vital signs and GPS coordinates sync via Bluetooth or satellite uplink directly to the receiving hospital's dashboard.</p>
+            </li>
+            <li class="step">
+                <span class="step__num">04</span>
+                <h3>Rescue</h3>
+                <p>Paramedics arrive already informed. Real-time data on their tablets allows them to triage and treat the most critical victims first — every second counts.</p>
+            </li>
+        </ol>
+    </div>
+</section>
+
+<!-- ============ CONNECT / INSTAGRAM ============ -->
+<section id="connect" class="section section--connect">
+    <div class="container">
+        <div class="connect">
+            <div class="connect__content">
+                <span class="kicker kicker--light">Stay Connected</span>
+                <h2 class="connect__title">Follow our journey to <span class="grad-light">redefine emergency response</span>.</h2>
+                <p class="connect__sub">Real-time product updates, field demos, engineering deep-dives, and the stories behind our mission. Join the community building the future of pre-hospital care.</p>
+                <a href="https://www.instagram.com/medtech_patch?igsh=MWo3cTcwbndmZzlyYg==" target="_blank" rel="noopener noreferrer" class="connect__handle">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                    </svg>
+                    <span>@medtech_patch</span>
+                    <svg class="connect__handle-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M7 17L17 7M9 7h8v8"/>
+                    </svg>
+                </a>
+            </div>
+
+            <div class="connect__qr">
+                <a href="https://www.instagram.com/medtech_patch?igsh=MWo3cTcwbndmZzlyYg==" target="_blank" rel="noopener noreferrer" class="qr-card" aria-label="Open MEDTECH Instagram">
+                    <div class="qr-card__placeholder">
+                        <img
+                            src="https://api.qrserver.com/v1/create-qr-code/?size=440x440&margin=0&ecc=M&data=https%3A%2F%2Fwww.instagram.com%2Fmedtech_patch%3Figsh%3DMWo3cTcwbndmZzlyYg%3D%3D"
+                            alt="Scan to open MEDTECH Instagram (@medtech_patch)"
+                            width="220"
+                            height="220"
+                            loading="lazy"
+                        />
+                    </div>
+                    <p class="qr-card__caption">Scan or tap to follow</p>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+    <div class="container footer__inner">
+        <div class="footer__brand">
+            <span class="brand-mark">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 12h4l2-7 4 14 2-7h6"/>
+                </svg>
+            </span>
+            <span class="brand-text">MED<span>TECH</span></span>
+        </div>
+        <p class="footer__tag">Integrated Triage Patch · Built for the Golden Hour.</p>
+        <p class="footer__copy">© <span id="year"></span> MEDTECH. All rights reserved.</p>
+    </div>
+</footer>
+
+<script src="assets/js/script.js"></script>
+</body>
+</html>
