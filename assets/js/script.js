@@ -178,21 +178,19 @@ document.addEventListener('DOMContentLoaded', () => {
         const direction = Math.random() < 0.5 ? 1 : -1;   // random spin direction
         const baseAngle = Math.random() * Math.PI * 2;
 
-        // ===== 1. Bright core flash =====
+        // ===== 1. Subtle core flash =====
         const core = document.createElement('div');
         core.style.cssText = `
             position: fixed; left: ${x}px; top: ${y}px;
-            width: 26px; height: 26px;
+            width: 14px; height: 14px;
             border-radius: 50%;
             background: radial-gradient(circle,
-                #ffffff 0%,
-                #ffd9f5 30%,
-                rgba(255,170,240,0.5) 55%,
+                rgba(255,255,255,0.9) 0%,
+                rgba(255,200,240,0.4) 40%,
                 transparent 75%);
             box-shadow:
-                0 0 40px #ffffff,
-                0 0 90px #ff77e0,
-                0 0 160px #7a5cff;
+                0 0 18px rgba(255,255,255,0.6),
+                0 0 40px rgba(255,119,224,0.4);
             pointer-events: none;
             z-index: 10000;
             transform: translate(-50%, -50%) scale(0);
@@ -201,30 +199,29 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.appendChild(core);
         const coreStart = performance.now();
         const animateCore = (now) => {
-            const t = (now - coreStart) / 700;
+            const t = (now - coreStart) / 450;
             if (t >= 1) { core.remove(); return; }
-            const scale = t < 0.18 ? (t / 0.18) * 1.6 : 1.6 + (t - 0.18) * 0.9;
+            const scale = t < 0.2 ? (t / 0.2) * 1.1 : 1.1 + (t - 0.2) * 0.4;
             core.style.transform = `translate(-50%, -50%) scale(${scale.toFixed(2)})`;
             core.style.opacity = (1 - t).toFixed(3);
             requestAnimationFrame(animateCore);
         };
         requestAnimationFrame(animateCore);
 
-        // ===== 2. Nebula cloud (soft purple/cyan blur) =====
+        // ===== 2. Soft nebula glow =====
         const nebula = document.createElement('div');
         nebula.style.cssText = `
             position: fixed; left: ${x}px; top: ${y}px;
-            width: 220px; height: 220px;
+            width: 110px; height: 110px;
             border-radius: 50%;
             background: radial-gradient(circle,
-                rgba(160,107,255,0.55) 0%,
-                rgba(47,107,255,0.30) 35%,
-                rgba(0,224,198,0.15) 60%,
-                transparent 80%);
-            filter: blur(18px);
+                rgba(160,107,255,0.30) 0%,
+                rgba(47,107,255,0.15) 45%,
+                transparent 75%);
+            filter: blur(10px);
             pointer-events: none;
             z-index: 9998;
-            transform: translate(-50%, -50%) scale(0.3) rotate(0deg);
+            transform: translate(-50%, -50%) scale(0.4) rotate(0deg);
             opacity: 0;
             will-change: transform, opacity;
             mix-blend-mode: screen;
@@ -232,32 +229,32 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.appendChild(nebula);
         const nebulaStart = performance.now();
         const animateNebula = (now) => {
-            const t = (now - nebulaStart) / 1600;
+            const t = (now - nebulaStart) / 900;
             if (t >= 1) { nebula.remove(); return; }
-            const scale = 0.3 + t * 1.6;
-            const opacity = t < 0.18 ? (t / 0.18) : (1 - (t - 0.18) / 0.82);
-            nebula.style.transform = `translate(-50%, -50%) scale(${scale.toFixed(2)}) rotate(${(t * 80 * direction).toFixed(1)}deg)`;
+            const scale = 0.4 + t * 1.0;
+            const opacity = t < 0.2 ? (t / 0.2) : (1 - (t - 0.2) / 0.8);
+            nebula.style.transform = `translate(-50%, -50%) scale(${scale.toFixed(2)}) rotate(${(t * 50 * direction).toFixed(1)}deg)`;
             nebula.style.opacity = opacity.toFixed(3);
             requestAnimationFrame(animateNebula);
         };
         requestAnimationFrame(animateNebula);
 
-        // ===== 3. Spiral arms =====
-        const ARMS = 3;
-        const PER_ARM = 24;
+        // ===== 3. Spiral arms (smaller, fewer) =====
+        const ARMS = 2;
+        const PER_ARM = 12;
         for (let arm = 0; arm < ARMS; arm++) {
             const armSeed = (arm / ARMS) * Math.PI * 2 + baseAngle;
             for (let i = 0; i < PER_ARM; i++) {
                 const k = i / PER_ARM;       // 0 (inner) → 1 (outer)
-                const initRadius = 4 + k * 26;
-                const initAngle  = armSeed + k * 1.4 * direction;
+                const initRadius = 3 + k * 18;
+                const initAngle  = armSeed + k * 1.3 * direction;
 
                 let palette;
                 if (k < 0.3)      palette = HOT;
                 else if (k < 0.65) palette = WARM;
                 else               palette = COOL;
                 const color = palette[Math.floor(Math.random() * palette.length)];
-                const size  = 2.5 + (1 - k) * 4 + Math.random() * 2;
+                const size  = 1.8 + (1 - k) * 2.5 + Math.random() * 1.2;
 
                 const startX = x + Math.cos(initAngle) * initRadius;
                 const startY = y + Math.sin(initAngle) * initRadius;
@@ -270,7 +267,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     background: ${color};
                     border-radius: 50%;
                     pointer-events: none;
-                    box-shadow: 0 0 ${size * 3}px ${color}, 0 0 ${size * 6}px ${color};
+                    box-shadow: 0 0 ${size * 2}px ${color};
                     z-index: 9999;
                     transform: translate(-50%, -50%);
                     will-change: transform, opacity;
@@ -279,8 +276,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 let angle  = initAngle;
                 let radius = initRadius;
-                const rotSpeed = direction * (1.8 - k * 0.9);          // rad/sec, faster inner
-                const expandSpeed = 70 + k * 200 + Math.random() * 60; // px/sec
+                const rotSpeed = direction * (1.6 - k * 0.8);
+                const expandSpeed = 50 + k * 130 + Math.random() * 40;
                 let life = 1;
                 let lastT = performance.now();
 
@@ -289,7 +286,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     lastT = now;
                     angle  += rotSpeed * dt;
                     radius += expandSpeed * dt;
-                    life -= dt * 0.75;
+                    life -= dt * 1.1;
                     if (life <= 0) { p.remove(); return; }
                     const px = x + Math.cos(angle) * radius;
                     const py = y + Math.sin(angle) * radius;
@@ -304,11 +301,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // ===== 4. Twinkling star dust =====
-        const DUST_COUNT = 32;
+        const DUST_COUNT = 14;
         for (let i = 0; i < DUST_COUNT; i++) {
             const angle = Math.random() * Math.PI * 2;
-            const speed = 90 + Math.random() * 320;
-            const size  = 1.4 + Math.random() * 2;
+            const speed = 70 + Math.random() * 200;
+            const size  = 1.2 + Math.random() * 1.4;
             const color = DUST[Math.floor(Math.random() * DUST.length)];
 
             const p = document.createElement('div');
@@ -319,7 +316,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 background: ${color};
                 border-radius: 50%;
                 pointer-events: none;
-                box-shadow: 0 0 ${size * 5}px ${color};
+                box-shadow: 0 0 ${size * 3}px ${color};
                 z-index: 9999;
                 transform: translate(-50%, -50%);
                 will-change: transform, opacity;
@@ -339,9 +336,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 posY += vy * dt;
                 vx *= 0.985;
                 vy *= 0.985;
-                life -= dt * 0.65;
+                life -= dt * 1.0;
                 if (life <= 0) { p.remove(); return; }
-                const twinkle = 0.55 + 0.45 * Math.sin(now / 75 + phase);
+                const twinkle = 0.6 + 0.4 * Math.sin(now / 80 + phase);
                 p.style.left = posX + 'px';
                 p.style.top  = posY + 'px';
                 p.style.opacity = (life * twinkle).toFixed(3);
